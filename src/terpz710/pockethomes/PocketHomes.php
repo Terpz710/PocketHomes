@@ -9,7 +9,7 @@ use pocketmine\plugin\PluginBase;
 use terpz710\pockethomes\commands\HomeCommand;
 use terpz710\pockethomes\commands\HomesCommand;
 use terpz710\pockethomes\commands\SetHomeCommand;
-use terpz710\pockethomes\commands\DeleteCommand;
+use terpz710\pockethomes\commands\DeleteHomeCommand;
 
 use terpz710\pockethomes\HomeAPI;
 
