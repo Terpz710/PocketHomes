@@ -11,7 +11,7 @@ use terpz710\pockethomes\commands\HomesCommand;
 use terpz710\pockethomes\commands\SetHomeCommand;
 use terpz710\pockethomes\commands\DeleteHomeCommand;
 
-use terpz710\pockethomes\HomeAPI;
+use terpz710\pockethomes\api\HomeAPI;
 
 use CortexPE\Commando\PacketHooker;
 
