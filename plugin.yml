@@ -1,0 +1,9 @@
+name: PocketHomes
+version: 1.0.0
+author: Terpz710
+api: 5.3.0
+main: terpz710\pockethomes\PocketHomes
+
+permissions:
+  pockethomes.cmd:
+    default: true
