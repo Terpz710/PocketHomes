@@ -54,8 +54,8 @@ final class HomeAPI {
                             "z" => $pos->getZ(),
                             "world" => $worldName
                         ],
-                        fn(int $affectedRows) => $callback?($affectedRows > 0, null),
-                        fn(SqlError $error) => $callback?(false, $error)
+                        fn(int $affectedRows) => $callback ? $callback($affectedRows > 0, null) : null,
+                        fn(SqlError $error) => $callback ? $callback(false, $error) : null
                     );
                 } else {
                     $this->database->executeChange(
@@ -68,12 +68,12 @@ final class HomeAPI {
                             "z" => $pos->getZ(),
                             "world" => $worldName
                         ],
-                        fn(int $affectedRows) => $callback?($affectedRows > 0, null),
-                        fn(SqlError $error) => $callback?(false, $error)
+                        fn(int $affectedRows) => $callback ? $callback($affectedRows > 0, null) : null,
+                        fn(SqlError $error) => $callback ? $callback(false, $error) : null
                     );
                 }
             },
-            fn(SqlError $error) => $callback?(false, $error)
+            fn(SqlError $error) => $callback ? $callback(false, $error) : null
         );
     }
 
@@ -86,7 +86,7 @@ final class HomeAPI {
             ],
             function (array $rows) use ($player, $callback) {
                 if (empty($rows)) {
-                    $callback?(false, "Home not found");
+                    $callback ? $callback(false, "Home not found") : null;
                     return;
                 }
 
@@ -96,21 +96,21 @@ final class HomeAPI {
 
                 if ($world === null) {
                     if (!$worldManager->loadWorld($data["world"])) {
-                        $callback?(false, "Failed to load world");
+                        $callback ? $callback(false, "Failed to load world") : null;
                         return;
                     }
 
                     $world = $worldManager->getWorldByName($data["world"]);
                     if ($world === null) {
-                        $callback?(false, "World could not be found even after loading");
+                        $callback ? $callback(false, "World could not be found even after loading") : null;
                         return;
                     }
                 }
 
                 $player->teleport(new Position((float)$data["x"], (float)$data["y"], (float)$data["z"], $world));
-                $callback?(true, null);
+                $callback ? $callback(true, null) : null;
             },
-            fn(SqlError $error) => $callback?(false, $error)
+            fn(SqlError $error) => $callback ? $callback(false, $error) : null
         );
     }
 
@@ -121,8 +121,8 @@ final class HomeAPI {
                 "player" => $player->getName(),
                 "home_name" => $name
             ],
-            fn(int $affectedRows) => $callback?($affectedRows > 0, null),
-            fn(SqlError $error) => $callback?(false, $error)
+            fn(int $affectedRows) => $callback ? $callback($affectedRows > 0, null) : null,
+            fn(SqlError $error) => $callback ? $callback(false, $error) : null
         );
     }
 
@@ -130,8 +130,8 @@ final class HomeAPI {
         $this->database->executeSelect(
             "homes.select_all",
             ["player" => $player->getName()],
-            fn(array $rows) => $callback?(array_map(fn($row) => $row["home_name"], $rows), null),
-            fn(SqlError $error) => $callback?(null, $error)
+            fn(array $rows) => $callback ? $callback(array_map(fn($row) => $row["home_name"], $rows), null) : null,
+            fn(SqlError $error) => $callback ? $callback(null, $error) : null
         );
     }
 
@@ -142,8 +142,8 @@ final class HomeAPI {
                 "player" => $player->getName(),
                 "home_name" => $name
             ],
-            fn(array $rows) => $callback?(!empty($rows), null),
-            fn(SqlError $error) => $callback?(false, $error)
+            fn(array $rows) => $callback ? $callback(!empty($rows), null) : null,
+            fn(SqlError $error) => $callback ? $callback(false, $error) : null
         );
     }
 
