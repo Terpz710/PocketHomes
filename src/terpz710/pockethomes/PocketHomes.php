@@ -30,12 +30,12 @@ final class PocketHomes extends PluginBase {
             PacketHooker::register($this);
         }
 
-        $this->getServer()->getCommandMap()->registerAll("PocketHomes", 
+        $this->getServer()->getCommandMap()->registerAll("PocketHomes", [
             new HomeCommand($this, "home", "Teleport to one of your homes"),
             new HomesCommand($this, "homes", "View a list of your homes"),
             new SetHomeCommand($this, "sethome", "Set a home at your current location"),
             new DeleteHomeCommand($this, "deletehome", "Remove one of your homes", ["removehome", "delhome"])
-        );
+        ]);
 
         HomeAPI::getInstance()->init();
     }
